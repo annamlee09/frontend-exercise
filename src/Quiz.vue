@@ -9,19 +9,19 @@
       <button v-if="questionIndex + 1 < questions.length" @click="next()">
         {{ 'Next Question' }}
       </button>
-      <button v-else>
+      <button v-else @click="showSummary = true">
         {{ 'See Summary' }}
       </button>
     </div>
-    <div v-if="showSummary">
+    <Summary v-show="showSummary" :responses="responses" @close="showSummary = false">
 
-    </div>
+    </Summary>
   </div>
 </template>
-
 <script>
 
 import Question from '@/components/Question.vue';
+import Summary from '@/components/Summary.vue';
 
 export default {
   props: {
@@ -30,9 +30,12 @@ export default {
       required: true
     }
   },
+
   components: {
-    Question
+    Question,
+    Summary
   },
+
   data() {
     return {
       showSummary: false,
@@ -40,8 +43,10 @@ export default {
       responses: {}
     };
   },
+
   computed: {
   },
+
   methods: {
     next() {
       if (this.questionIndex < this.questions.length - 1) {
