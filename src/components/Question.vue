@@ -5,11 +5,10 @@
                 {{ question.text }}
             </span>
         </div>
-        <form>
-            <button class="answer" v-for="(answer, index) in question.answers" :key="index">
-                {{ answer }}
-            </button>
-        </form>
+        <button class="option" v-for="(option, index) in question.answers" :key="index" @click="$emit('selectAnswer', question.answers[index])">
+            {{ option }}
+        </button>
+
 
     </div>
 </template>
@@ -20,10 +19,11 @@ export default {
     name: 'question',
     data() {
         return {
-
+            
         };
     },
     props: ['question']
+   
 }
 </script>
 

@@ -1,13 +1,17 @@
 <template>
   <div id="quiz">
     <h1>Cognito Forms Quiz</h1>
-
-
-    <div v-for="(question, index) in questions" :key="index">
-      <Question :question="question"></Question>
+    <Question :question="questions[questionIndex]" @selectAnswer="selectAnswer"></Question>
+    <div>
+      {{ `Question ${questionIndex + 1} of ${questions.length}` }}
     </div>
     <div>
-      {{ `Question ${currentQuestion} of ${questions.length}` }}
+      <button v-if="questionIndex + 1 < questions.length" @click="next()">
+        {{ 'Next Question' }}
+      </button>
+      <button v-else>
+        {{ 'See Summary' }}
+      </button>
     </div>
     <div v-if="showSummary">
 
@@ -31,17 +35,30 @@ export default {
   },
   data() {
     return {
-      showSummary: false
+      showSummary: false,
+      questionIndex: 0,
+      responses: {}
     };
   },
   computed: {
+  },
+  methods: {
+    next() {
+      if (this.questionIndex < this.questions.length - 1) {
+        this.questionIndex++;
+      }
+    },
+
+    selectAnswer(answer) {
+      this.responses[this.questionIndex] = answer;
+      console.log(this.responses);
+    }
   }
 };
 
 </script>
 
 <style>
-
 #quiz {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
