@@ -1,6 +1,6 @@
 <template>
     <div id="quiz">
-        <h1>Cognito Forms Quiz</h1>
+        <h1>Cognito Forms Technical Exercise</h1>
         <div class="quiz-container">
             <Question
                 :key=questionIndex
