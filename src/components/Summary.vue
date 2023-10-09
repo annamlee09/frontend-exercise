@@ -9,7 +9,7 @@
                     </button>
                 </header>
                 <div class="modal-body">
-                    <div v-for="(question, index) in questions">
+                    <div v-for="(question, index) in questions" :key="index">
                         <h2>{{ question.text }}</h2>
                         <h3>{{ responses[index] }}</h3>
                     </div>

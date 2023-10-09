@@ -5,7 +5,8 @@
             <button 
                 class="btn-option"
                 v-for="(option, index) in question.answers"
-                :key="index" @click="selectAnswer(index)"
+                :key="index"
+                @click="selectAnswer(index)"
                 :class="{ 'is-selected': answerIndex === index + 1 }"
             >
                 {{ option }}
