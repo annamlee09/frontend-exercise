@@ -1,11 +1,13 @@
 <template>
     <div>
-        <h2>
-            {{ question.text }}
-        </h2>
+        <h2>{{ question.text }}</h2>
         <div class="options">
-            <button class="btn-option" v-for="(option, index) in question.answers" :key="index" @click="selectAnswer(index)"
-                :class="{ 'is-selected': answerIndex === index + 1 }">
+            <button 
+                class="btn-option"
+                v-for="(option, index) in question.answers"
+                :key="index" @click="selectAnswer(index)"
+                :class="{ 'is-selected': answerIndex === index + 1 }"
+            >
                 {{ option }}
             </button>
         </div>
@@ -33,10 +35,6 @@ export default {
 </script>
 
 <style scoped>
-.question {
-    font-size: 18px;
-}
-
 .options {
     display: flex;
     flex-direction: row;
