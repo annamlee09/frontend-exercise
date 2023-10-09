@@ -1,15 +1,19 @@
 <template>
   <div id="quiz">
     <h1>Cognito Forms Quiz</h1>
-    <Question :question="questions[questionIndex]" @selectAnswer="selectAnswer"></Question>
-    <div>
-      {{ `Question ${questionIndex + 1} of ${questions.length}` }}
+    <div class="quiz-container">
+      <Question :key=questionIndex :question="questions[questionIndex]" :questionIndex="questionIndex"
+        :responses="responses" @selectAnswer="selectAnswer">
+      </Question>
+      <div>
+        {{ `Question ${questionIndex + 1} of ${questions.length}` }}
+      </div>
     </div>
     <div>
-      <button v-if="questionIndex + 1 < questions.length" @click="next()">
+      <button class="btn btn-next" v-if="questionIndex + 1 < questions.length" :disabled="isNavigationDisabled" :class="{'btn-disabled': isNavigationDisabled}" @click="next()">
         {{ 'Next Question' }}
       </button>
-      <button v-else @click="showSummary = true">
+      <button class='btn btn-summary ' v-else @click="showSummary = true">
         {{ 'See Summary' }}
       </button>
     </div>
@@ -40,7 +44,8 @@ export default {
     return {
       showSummary: false,
       questionIndex: 0,
-      responses: {}
+      responses: {},
+      isNavigationDisabled: true
     };
   },
 
@@ -49,6 +54,7 @@ export default {
 
   methods: {
     next() {
+      this.isNavigationDisabled = true;
       if (this.questionIndex < this.questions.length - 1) {
         this.questionIndex++;
       }
@@ -56,7 +62,7 @@ export default {
 
     selectAnswer(answer) {
       this.responses[this.questionIndex] = answer;
-      console.log(this.responses);
+      this.isNavigationDisabled = false;
     }
   }
 };
@@ -70,5 +76,51 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   color: #2c2c4e;
   text-align: center;
+}
+
+.quiz-container {
+  margin: 1rem auto;
+  padding: 1rem;
+  max-width: 750px;
+}
+
+.btn {
+    border: transparent 1px solid;
+    border-radius: 20px;
+    border-color: #42b883;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    transition-duration: 0.4s;
+    cursor: pointer;
+    width: 20%;
+}
+
+.btn-next {
+    background-color: #ffffff;
+    color: #2c2c4e;
+
+    &:hover {
+        background-color: rgba(0, 0, 0, 0.05);
+    }
+}
+
+.btn-summary {
+    border: none;
+    background-color: #42b883;
+    color: #ffffff;
+
+    &:hover {
+        background-color: rgba(66, 184, 131, 0.7);
+    }
+}
+
+.btn-disabled {
+    background-color: rgba(0, 0, 0, 0.05);
+    border-color: rgba(0, 0, 0, 0.1);
+    color: rgba(0, 0, 0, 0.2)
 }
 </style>
