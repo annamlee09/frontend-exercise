@@ -119,7 +119,8 @@ export default {
     margin: 4px 2px;
     transition-duration: 0.4s;
     cursor: pointer;
-    width: 30%;
+    width: 20%;
+    min-width: 250px;
 }
 
 .btn-next {

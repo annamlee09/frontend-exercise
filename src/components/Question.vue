@@ -55,7 +55,8 @@ export default {
     margin: 4px 2px;
     transition-duration: 0.4s;
     cursor: pointer;
-    width: 40%;
+    width: 20%;
+    min-width: 250px;
 
     &:hover {
         background-color: rgba(0, 0, 0, 0.1);
