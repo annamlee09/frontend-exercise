@@ -10,16 +10,17 @@
       </div>
     </div>
     <div>
-      <button class="btn btn-next" v-if="questionIndex + 1 < questions.length" :disabled="isNavigationDisabled" :class="{'btn-disabled': isNavigationDisabled}" @click="next()">
+      <button class="btn btn-next" v-if="questionIndex + 1 < questions.length" :disabled="isNavigationDisabled"
+        :class="{ 'btn-disabled': isNavigationDisabled }" @click="next()">
         {{ 'Next Question' }}
       </button>
-      <button class='btn btn-summary ' v-else @click="showSummary = true">
+      <button class='btn btn-summary' v-else @click="showSummary = true" :disabled="isNavigationDisabled"
+        :class="{ 'btn-disabled': isNavigationDisabled }">
         {{ 'See Summary' }}
       </button>
     </div>
-    <Summary v-show="showSummary" :responses="responses" @close="showSummary = false">
-
-    </Summary>
+    <Summary v-show="showSummary" :questions="questions" :responses="responses" @close="showSummary = false"
+      @restart="restartQuiz"></Summary>
   </div>
 </template>
 <script>
@@ -60,8 +61,12 @@ export default {
       }
     },
 
+    restartQuiz() {
+      window.location.reload();
+    },
+
     selectAnswer(answer) {
-      this.responses[this.questionIndex] = answer;
+      this.$set(this.responses, this.questionIndex, answer);
       this.isNavigationDisabled = false;
     }
   }
@@ -85,42 +90,45 @@ export default {
 }
 
 .btn {
-    border: transparent 1px solid;
-    border-radius: 20px;
-    border-color: #42b883;
-    padding: 10px 20px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    margin: 4px 2px;
-    transition-duration: 0.4s;
-    cursor: pointer;
-    width: 20%;
+  border: transparent 1px solid;
+  border-radius: 20px;
+  border-color: #42b883;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  transition-duration: 0.4s;
+  cursor: pointer;
+  width: 20%;
 }
 
 .btn-next {
-    background-color: #ffffff;
-    color: #2c2c4e;
+  background-color: #ffffff;
+  color: #2c2c4e;
 
-    &:hover {
-        background-color: rgba(0, 0, 0, 0.05);
-    }
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+  }
 }
 
 .btn-summary {
-    border: none;
-    background-color: #42b883;
-    color: #ffffff;
+  border: none;
+  background-color: #42b883;
+  color: #ffffff;
 
-    &:hover {
-        background-color: rgba(66, 184, 131, 0.7);
-    }
+  &:hover {
+    background-color: rgba(66, 184, 131, 0.7);
+  }
 }
 
 .btn-disabled {
+  background-color: rgba(0, 0, 0, 0.05);
+  border-color: rgba(0, 0, 0, 0.1);
+  color: rgba(0, 0, 0, 0.2);
+
+  &:hover {
     background-color: rgba(0, 0, 0, 0.05);
-    border-color: rgba(0, 0, 0, 0.1);
-    color: rgba(0, 0, 0, 0.2)
-}
-</style>
+  }
+}</style>

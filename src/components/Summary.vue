@@ -2,18 +2,20 @@
     <transition name="modal-transition">
         <div class="modal-container">
             <div class="modal">
-                <header class="modal-header" id="modalTitle">
+                <header class="modal-header">
+                    <h2>Quiz Summary</h2>
                     <button class="btn-close" @click="$emit('close')">
                         x
                     </button>
                 </header>
-                <section class="modal-body" id="modalDescription">
-                    <slot name="body">
-
-                    </slot>
-                </section>
+                <div class="modal-body">
+                    <div v-for="(question, index) in questions">
+                        <h2>{{ question.text }}</h2>
+                        <h3>{{ responses[index] }}</h3>
+                    </div>
+                </div>
                 <footer class="modal-footer">
-                    <button class="btn-green" @click="$emit('restart')">
+                    <button class="btn-restart" @click="$emit('restart')">
                         Restart
                     </button>
                 </footer>
@@ -26,7 +28,7 @@
 
 export default {
     name: 'summary-modal',
-    props: ['responses']
+    props: ['questions', 'responses']
 }
 
 </script>
@@ -45,11 +47,15 @@ export default {
 }
 
 .modal {
+    padding: 10px;
     background: #FFFFFF;
     box-shadow: 2px 2px 20px 1px;
     overflow-x: auto;
     display: flex;
     flex-direction: column;
+    border-radius: 20px;
+    justify-content: center;
+    align-items: center
 }
 
 .modal-header,
@@ -61,38 +67,58 @@ export default {
 .modal-header {
     position: relative;
     border-bottom: 1px solid #eeeeee;
-    color: #4AAE9B;
-    justify-content: space-between;
+    color: #42b883;
 }
 
 .modal-footer {
-    border-top: 1px solid #eeeeee;
     flex-direction: column;
+    align-self: stretch;
 }
 
 .modal-body {
     position: relative;
-    padding: 20px 10px;
+    padding: 0 10px;
 }
 
 .btn-close {
     position: absolute;
-    top: 0;
-    right: 0;
+    bottom: 50%;
+    left: 160%;
     border: none;
-    font-size: 20px;
-    padding: 10px;
+    font-size: 25px;
     cursor: pointer;
     font-weight: bold;
-    color: #4AAE9B;
+    color: #42b883;
     background: transparent;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+
+    &:hover {
+        background-color: rgba(0, 0, 0, 0.05);
+    }
 }
 
-.btn-green {
-    color: white;
-    background: #4AAE9B;
-    border: 1px solid #4AAE9B;
-    border-radius: 2px;
+
+.btn-restart {
+    border: none;
+    background-color: #42b883;
+    color: #ffffff;
+    border-radius: 20px;
+    border-color: #42b883;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    transition-duration: 0.4s;
+    cursor: pointer;
+    width: 100%;
+
+    &:hover {
+        background-color: rgba(66, 184, 131, 0.7);
+    }
 }
 
 .modal-transition-enter,
